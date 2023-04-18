@@ -13,7 +13,7 @@ import java.awt.print.Pageable;
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 @RequestMapping(value = "/ads")
-public class AnnouncementController {
+public class AdsController {
 
     @GetMapping
     public ResponseWrapperAds getAllAds(Pageable pageable){
