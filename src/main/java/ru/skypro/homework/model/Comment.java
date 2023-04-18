@@ -9,9 +9,8 @@ import javax.persistence.*;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer pk;
+    private Long pk;
     private String authorImage;
-    private String authorFirstName;
     private Integer createdAt;
     private String text;
     @ManyToOne

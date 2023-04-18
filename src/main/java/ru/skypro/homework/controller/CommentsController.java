@@ -4,29 +4,37 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.ResponseWrapperComment;
+import ru.skypro.homework.service.CommentsService;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
-@RequestMapping(value = "/ads")
+@RequestMapping(value = "/ads/{id}/comments")
 public class CommentsController {
 
-    @GetMapping(value = "/{id}/comments")
+    private final CommentsService commentsService;
+
+    public CommentsController(CommentsService commentsService) {
+        this.commentsService = commentsService;
+    }
+
+    @GetMapping
     public ResponseWrapperComment getComments(@PathVariable Long id){
-        return new ResponseWrapperComment();
+        return commentsService.getAll(id);
     }
 
-    @PostMapping(value = "/{id}/comments")
+    @PostMapping
     public CommentDTO addComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
-        return new CommentDTO();
+        return commentsService.addComment(id, commentDTO);
     }
 
-    @DeleteMapping(value = "/{adId}/comments/{commentId}")
-    public ResponseEntity deleteComment(@PathVariable Long adId, @PathVariable Long commentId){
+    @DeleteMapping(value = "/{commentId}")
+    public ResponseEntity deleteComment(@PathVariable Long id, @PathVariable Long commentId){
+        commentsService.deleteComment(id, commentId);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping(value = "{adId}/comments/{commentId}")
-    public CommentDTO updateComment(@PathVariable Long adId, @PathVariable Long commentId, @RequestBody CommentDTO commentDTO){
-        return new CommentDTO();
+    @PatchMapping(value = "/{commentId}")
+    public CommentDTO updateComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody CommentDTO commentDTO){
+        return commentsService.update(id,commentId, commentDTO);
     }
 }

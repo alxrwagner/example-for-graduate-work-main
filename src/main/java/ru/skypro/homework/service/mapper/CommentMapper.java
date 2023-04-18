@@ -8,7 +8,6 @@ public class CommentMapper {
         Comment comment = new Comment();
         comment.setPk(commentDTO.getPk());
         comment.setAuthorImage(commentDTO.getAuthorImage());
-        comment.setAuthorFirstName(commentDTO.getAuthorFirstName());
         comment.setCreatedAt(commentDTO.getCreatedAt());
         comment.setText(commentDTO.getText());
         return comment;
@@ -21,7 +20,7 @@ public class CommentMapper {
         commentDTO.setAuthorImage(comment.getAuthorImage());
         commentDTO.setAuthor(comment.getAuthor().getId());
         commentDTO.setCreatedAt(comment.getCreatedAt());
-        commentDTO.setAuthorFirstName(comment.getAuthorFirstName());
+        commentDTO.setAuthorFirstName(comment.getAuthor().getFirstName());
         return commentDTO;
     }
 }
