@@ -26,7 +26,7 @@ public class AdsController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAllAds(){
+    public ResponseEntity<?> getAllAds() {
         return ResponseEntity.ok(adsService.getAll());
     }
 
@@ -40,33 +40,39 @@ public class AdsController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<?> getAds(@PathVariable Integer id){
+    public ResponseEntity<?> getAds(@PathVariable Integer id) {
         return ResponseEntity.ok(adsService.getById(id));
     }
 
     @PreAuthorize("adsService.getById(#id).getEmail()" +
-    "== authentication.principal.username or hasRole('ROLE_ADMIN')")
+            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> removeAd(@PathVariable Integer id){
+    public ResponseEntity<?> removeAd(@PathVariable Integer id) {
         adsService.remove(id);
-        return  ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(value = "/search")
+    public ResponseEntity<?> searchByTitle(@RequestParam(required = false) String title) {
+        return ResponseEntity.ok(adsService.search(title));
     }
 
     @PreAuthorize("adsService.getById(#id).getEmail()" +
-            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
+            "== authentication.principal.username or hasRole('ADMIN')")
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<?> updateAds(@PathVariable Integer id, @RequestBody CreateAds createAds){
+    public ResponseEntity<?> updateAds(@PathVariable Integer id, @RequestBody CreateAds createAds) {
         return ResponseEntity.ok(adsService.update(id, createAds));
     }
+
     @GetMapping(value = "/me")
-    public ResponseEntity<?> getAdsMe(Authentication authentication){
+    public ResponseEntity<?> getAdsMe(Authentication authentication) {
         return ResponseEntity.ok(adsService.getMeAll(authentication));
     }
 
     @PreAuthorize("adsService.getById(#id).getEmail()" +
-            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
+            "== authentication.principal.username or hasRole('ADMIN')")
     @PatchMapping(value = "/{id}/image")
-    public ResponseEntity<?> updateImage(@PathVariable Integer id, @RequestParam("image") MultipartFile avatar){
+    public ResponseEntity<?> updateImage(@PathVariable Integer id, @RequestParam("image") MultipartFile avatar) {
         adsService.updateImage(id, avatar);
         return ResponseEntity.ok().build();
     }

@@ -90,4 +90,11 @@ public class AdsService {
     public byte[] showImage(Integer id) {
         return adsRepos.findById(id).orElseThrow(NotFoundException::new).getImage();
     }
+
+    public ResponseWrapperAds search(String title) {
+        ResponseWrapperAds wrapper = new ResponseWrapperAds();
+        wrapper.setResults(adsRepos.findAllByTitleContainsIgnoreCase(title).stream().map(AdsMapper::mapToDTO).collect(Collectors.toList()));
+        wrapper.setCount(wrapper.getResults().size());
+        return wrapper;
+    }
 }
