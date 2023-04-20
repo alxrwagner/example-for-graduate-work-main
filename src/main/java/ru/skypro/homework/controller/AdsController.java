@@ -53,7 +53,7 @@ public class AdsController {
     }
 
     @PreAuthorize("adsService.getById(#id).getEmail()" +
-            "== authentication.principal.username")
+            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<?> updateAds(@PathVariable Integer id, @RequestBody CreateAds createAds){
         return ResponseEntity.ok(adsService.update(id, createAds));
@@ -64,7 +64,7 @@ public class AdsController {
     }
 
     @PreAuthorize("adsService.getById(#id).getEmail()" +
-            "== authentication.principal.username")
+            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{id}/image")
     public ResponseEntity<?> updateImage(@PathVariable Integer id, @RequestParam("image") MultipartFile avatar){
         adsService.updateImage(id, avatar);

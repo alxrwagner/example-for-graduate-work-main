@@ -38,7 +38,7 @@ public class CommentsController {
     }
 
     @PreAuthorize("commentsService.getById(#commentId).author.username" +
-            "== authentication.principal.username")
+            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{adId}/comments/{commentId}")
     public CommentDTO updateComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId, @RequestBody CommentDTO commentDTO){
         return commentsService.update(commentId, adId, commentDTO);
