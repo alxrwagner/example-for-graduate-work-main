@@ -43,6 +43,7 @@ public class JwtUserDetailsService implements UserDetailsManager {
 
     @Override
     public void changePassword(String oldPassword, String newPassword) {
+
     }
 
     @Override

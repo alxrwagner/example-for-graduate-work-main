@@ -29,7 +29,7 @@ public class UserService {
     }
 
     public void changePassword(NewPassword newPassword, Authentication authentication) {
-        User user = UserMapper.mapFromDTO(findByUsername(authentication));
+        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
         if (!encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
             throw new BadCredentialsException("Authentication exception");
         }
