@@ -29,15 +29,6 @@ public class AdsMapper {
         return fullAds;
     }
 
-    public static Ads mapFromFullDTO(FullAds fullAds) {
-        Ads ads = new Ads();
-        ads.setPk(fullAds.getPk());
-        ads.setTitle(fullAds.getTitle());
-        ads.setDescription(fullAds.getDescription());
-        ads.setPrice(fullAds.getPrice());
-        return ads;
-    }
-
     public static Ads mapFromCreateAds(CreateAds createAds) {
         Ads ads = new Ads();
         ads.setTitle(createAds.getTitle());

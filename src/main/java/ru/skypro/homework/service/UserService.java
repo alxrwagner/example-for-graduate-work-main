@@ -17,12 +17,10 @@ import java.io.IOException;
 @Service
 public class UserService {
     private final UserRepos userRepos;
-    private final JwtUserDetailsService jwtService;
     private final PasswordEncoder encoder;
 
-    public UserService(UserRepos userRepos, JwtUserDetailsService jwtService, PasswordEncoder encoder) {
+    public UserService(UserRepos userRepos, PasswordEncoder encoder) {
         this.userRepos = userRepos;
-        this.jwtService = jwtService;
         this.encoder = encoder;
     }
 
