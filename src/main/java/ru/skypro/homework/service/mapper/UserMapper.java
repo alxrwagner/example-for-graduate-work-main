@@ -7,7 +7,7 @@ import ru.skypro.homework.model.User;
 
 public class UserMapper {
 
-    public static UserDTO mapToDTO(User user){
+    public static UserDTO mapToDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getUsername());
@@ -18,7 +18,7 @@ public class UserMapper {
         return userDTO;
     }
 
-    public static User mapFromDTO(UserDTO userDTO){
+    public static User mapFromDTO(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
         user.setUsername(userDTO.getEmail());
@@ -28,7 +28,7 @@ public class UserMapper {
         return user;
     }
 
-    public static User mapFromRegister(RegisterReq reg){
+    public static User mapFromRegister(RegisterReq reg) {
         User user = new User();
         user.setUsername(reg.getUsername());
         user.setPassword(reg.getPassword());
@@ -38,19 +38,20 @@ public class UserMapper {
         return user;
     }
 
-    public static JwtUser mapToJwtUser(User user){
-       JwtUser jwtUser = new JwtUser();
-       jwtUser.setRole(user.getRole());
-       jwtUser.setUsername(user.getUsername());
-       jwtUser.setPassword(user.getPassword());
-       jwtUser.setFirstName(user.getFirstName());
-       jwtUser.setLastName(user.getLastName());
-       jwtUser.setPhone(user.getPhone());
-       jwtUser.setImage("/users/me/image/" + user.getId());
-       jwtUser.setEnabled(true);
-       return jwtUser;
+    public static JwtUser mapToJwtUser(User user) {
+        JwtUser jwtUser = new JwtUser();
+        jwtUser.setRole(user.getRole());
+        jwtUser.setUsername(user.getUsername());
+        jwtUser.setPassword(user.getPassword());
+        jwtUser.setFirstName(user.getFirstName());
+        jwtUser.setLastName(user.getLastName());
+        jwtUser.setPhone(user.getPhone());
+        jwtUser.setImage("/users/me/image/" + user.getId());
+        jwtUser.setEnabled(true);
+        return jwtUser;
     }
-    public static User jwtUserToUser(JwtUser jwtUser){
+
+    public static User jwtUserToUser(JwtUser jwtUser) {
         User user = new User();
         user.setUsername(jwtUser.getUsername());
         user.setFirstName(jwtUser.getFirstName());

@@ -15,7 +15,6 @@ import ru.skypro.homework.repository.AdsRepos;
 import ru.skypro.homework.repository.UserRepos;
 import ru.skypro.homework.service.mapper.AdsMapper;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.stream.Collectors;
 

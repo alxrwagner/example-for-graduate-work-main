@@ -2,8 +2,6 @@ package ru.skypro.homework.dto.commentDTO;
 
 import lombok.Data;
 
-import java.time.Instant;
-
 @Data
 public class CommentDTO {
     private Integer author;

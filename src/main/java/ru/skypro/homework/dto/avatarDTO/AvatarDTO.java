@@ -1,12 +1,10 @@
 package ru.skypro.homework.dto.avatarDTO;
 
 import lombok.Data;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 
 @Data
 public class AvatarDTO {

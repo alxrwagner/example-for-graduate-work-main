@@ -7,7 +7,7 @@ import ru.skypro.homework.model.Ads;
 
 public class AdsMapper {
 
-    public static AdsDTO mapToDTO(Ads ads){
+    public static AdsDTO mapToDTO(Ads ads) {
         AdsDTO adsDTO = new AdsDTO();
         adsDTO.setPk(ads.getPk());
         adsDTO.setAuthor(ads.getAuthor().getId());
@@ -17,7 +17,7 @@ public class AdsMapper {
         return adsDTO;
     }
 
-    public static FullAds mapToFullDTO(Ads ads){
+    public static FullAds mapToFullDTO(Ads ads) {
         FullAds fullAds = new FullAds();
         fullAds.setPk(ads.getPk());
         fullAds.setTitle(ads.getTitle());
@@ -29,7 +29,7 @@ public class AdsMapper {
         return fullAds;
     }
 
-    public static Ads mapFromFullDTO(FullAds fullAds){
+    public static Ads mapFromFullDTO(FullAds fullAds) {
         Ads ads = new Ads();
         ads.setPk(fullAds.getPk());
         ads.setTitle(fullAds.getTitle());
@@ -38,7 +38,7 @@ public class AdsMapper {
         return ads;
     }
 
-    public static Ads mapFromCreateAds(CreateAds createAds){
+    public static Ads mapFromCreateAds(CreateAds createAds) {
         Ads ads = new Ads();
         ads.setTitle(createAds.getTitle());
         ads.setDescription(createAds.getDescription());

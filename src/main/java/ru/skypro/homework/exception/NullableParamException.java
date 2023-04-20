@@ -1,4 +1,4 @@
 package ru.skypro.homework.exception;
 
-public class NullableParamException extends RuntimeException{
+public class NullableParamException extends RuntimeException {
 }

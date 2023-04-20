@@ -19,6 +19,7 @@ public class UserService {
     private final UserRepos userRepos;
     private final JwtUserDetailsService jwtService;
     private final PasswordEncoder encoder;
+
     public UserService(UserRepos userRepos, JwtUserDetailsService jwtService, PasswordEncoder encoder) {
         this.userRepos = userRepos;
         this.jwtService = jwtService;
@@ -29,16 +30,16 @@ public class UserService {
         return UserMapper.mapToDTO(userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new));
     }
 
-    public void changePassword(NewPassword newPassword, Authentication authentication){
+    public void changePassword(NewPassword newPassword, Authentication authentication) {
         User user = UserMapper.mapFromDTO(findByUsername(authentication));
-        if(!encoder.matches(newPassword.getCurrentPassword(), user.getPassword())){
+        if (!encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
             throw new BadCredentialsException("Authentication exception");
         }
         user.setPassword(encoder.encode(newPassword.getNewPassword()));
         userRepos.save(user);
     }
 
-    public UserDTO update(UserDTO userDTO){
+    public UserDTO update(UserDTO userDTO) {
         User user = userRepos.findById(userDTO.getId()).orElseThrow(NotFoundException::new);
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

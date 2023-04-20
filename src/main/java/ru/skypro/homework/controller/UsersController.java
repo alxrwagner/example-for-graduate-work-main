@@ -23,18 +23,18 @@ public class UsersController {
     }
 
     @PostMapping(value = "/set_password")
-    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword, Authentication authentication){
+    public ResponseEntity<?> setPassword(@RequestBody NewPassword newPassword, Authentication authentication) {
         userService.changePassword(newPassword, authentication);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/me")
-    public ResponseEntity<?> getUser(Authentication authentication){
+    public ResponseEntity<?> getUser(Authentication authentication) {
         return ResponseEntity.ok(userService.findByUsername(authentication));
     }
 
     @PatchMapping(value = "/me")
-    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> updateUser(@RequestBody UserDTO userDTO) {
         return ResponseEntity.ok(userService.update(userDTO));
     }
 

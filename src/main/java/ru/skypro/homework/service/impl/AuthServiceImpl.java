@@ -3,12 +3,12 @@ package ru.skypro.homework.service.impl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.userDTO.RegisterReq;
 import ru.skypro.homework.dto.Role;
+import ru.skypro.homework.dto.userDTO.RegisterReq;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
-import ru.skypro.homework.service.JwtUserDetailsService;
 import ru.skypro.homework.service.AuthService;
+import ru.skypro.homework.service.JwtUserDetailsService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 

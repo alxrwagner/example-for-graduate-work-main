@@ -1,7 +1,6 @@
 package ru.skypro.homework.model;
 
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
