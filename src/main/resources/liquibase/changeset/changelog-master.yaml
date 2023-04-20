@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-      file: liquibase/changeset/user.sql
+      file: liquibase/changeset/users.sql
   - include:
       file: liquibase/changeset/ads.sql
   - include:

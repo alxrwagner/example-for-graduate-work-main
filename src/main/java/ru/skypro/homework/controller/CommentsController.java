@@ -5,15 +5,16 @@ import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.CommentDTO;
 import ru.skypro.homework.dto.ResponseWrapperComment;
 import ru.skypro.homework.service.CommentsService;
+import ru.skypro.homework.service.impl.CommentsServiceImpl;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 @RequestMapping(value = "/ads/{id}/comments")
 public class CommentsController {
 
-    private final CommentsService commentsService;
+    private final CommentsServiceImpl commentsService;
 
-    public CommentsController(CommentsService commentsService) {
+    public CommentsController(CommentsServiceImpl commentsService) {
         this.commentsService = commentsService;
     }
 
@@ -28,7 +29,7 @@ public class CommentsController {
     }
 
     @DeleteMapping(value = "/{commentId}")
-    public ResponseEntity deleteComment(@PathVariable Long id, @PathVariable Long commentId){
+    public ResponseEntity<?> deleteComment(@PathVariable Long id, @PathVariable Long commentId){
         commentsService.deleteComment(id, commentId);
         return ResponseEntity.ok().build();
     }

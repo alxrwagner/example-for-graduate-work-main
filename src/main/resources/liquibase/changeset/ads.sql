@@ -2,7 +2,8 @@
 
 -- changeset wagner:create-table-ads
 CREATE TABLE ads(
-                       pk bigserial not null primary key ,
+                       pk serial primary key ,
+                       author_id integer references users (id),
                        title varchar(100) not null,
                        description varchar(100) not null,
                        email varchar(100) not null,
