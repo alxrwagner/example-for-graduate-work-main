@@ -25,7 +25,7 @@ public class AdsController {
         this.adsService = adsService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAllAds() {
         return ResponseEntity.ok(adsService.getAll());
     }
