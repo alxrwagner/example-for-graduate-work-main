@@ -1,4 +1,4 @@
-package ru.skypro.homework.dto;
+package ru.skypro.homework.dto.userDTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -7,7 +7,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.skypro.homework.dto.Role;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 @Data
@@ -30,7 +29,7 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @JsonIgnore

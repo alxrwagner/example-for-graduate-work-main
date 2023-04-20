@@ -1,18 +1,11 @@
 package ru.skypro.homework.service.mapper;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.skypro.homework.dto.RegisterReq;
-import ru.skypro.homework.dto.UserDTO;
+import ru.skypro.homework.dto.userDTO.JwtUser;
+import ru.skypro.homework.dto.userDTO.RegisterReq;
+import ru.skypro.homework.dto.userDTO.UserDTO;
 import ru.skypro.homework.model.User;
-import ru.skypro.homework.dto.JwtUser;
 
 public class UserMapper {
-
-    private static PasswordEncoder encoder;
-
-    private UserMapper(PasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
 
     public static UserDTO mapToDTO(User user){
         UserDTO userDTO = new UserDTO();
@@ -21,7 +14,7 @@ public class UserMapper {
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setPhone(user.getPhone());
-        userDTO.setImage(user.getImage());
+        userDTO.setImage("/users/me/image/" + user.getId());
         return userDTO;
     }
 
@@ -32,7 +25,6 @@ public class UserMapper {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setPhone(userDTO.getPhone());
-        user.setImage(userDTO.getImage());
         return user;
     }
 
@@ -46,12 +38,6 @@ public class UserMapper {
         return user;
     }
 
-//    public static JwtUser jwtUserFromRegister(RegisterReq reg){
-//        JwtUser user = new JwtUser(
-//
-//        return user;
-//    }
-
     public static JwtUser mapToJwtUser(User user){
        JwtUser jwtUser = new JwtUser();
        jwtUser.setRole(user.getRole());
@@ -60,7 +46,7 @@ public class UserMapper {
        jwtUser.setFirstName(user.getFirstName());
        jwtUser.setLastName(user.getLastName());
        jwtUser.setPhone(user.getPhone());
-       jwtUser.setImage(user.getImage());
+       jwtUser.setImage("/users/me/image/" + user.getId());
        jwtUser.setEnabled(true);
        return jwtUser;
     }
@@ -71,7 +57,6 @@ public class UserMapper {
         user.setLastName(jwtUser.getLastName());
         user.setPhone(jwtUser.getPhone());
         user.setPassword(jwtUser.getPassword());
-        user.setImage(jwtUser.getImage());
         user.setEnabled(jwtUser.isEnabled());
         user.setRole(jwtUser.getRole());
         return user;

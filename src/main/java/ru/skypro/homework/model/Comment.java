@@ -3,6 +3,7 @@ package ru.skypro.homework.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -10,13 +11,10 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk;
-    private String authorImage;
-    private Integer createdAt;
+    private Instant createdAt = Instant.now();
     private String text;
-    @ManyToOne
-    @JoinColumn(name = "ads_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Ads ads;
-    @ManyToOne
-    @JoinColumn(name = "author_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 }

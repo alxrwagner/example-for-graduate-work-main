@@ -1,6 +1,7 @@
 package ru.skypro.homework.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 
@@ -11,12 +12,9 @@ public class Ads {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk;
     private String description;
-    private String email;
-    private String image;
-    private String phone;
+    private byte[] image;
     private Integer price;
     private String title;
-    @ManyToOne
-    @JoinColumn(name = "author_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private User author;
 }

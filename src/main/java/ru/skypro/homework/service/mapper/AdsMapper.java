@@ -1,8 +1,8 @@
 package ru.skypro.homework.service.mapper;
 
-import ru.skypro.homework.dto.AdsDTO;
-import ru.skypro.homework.dto.CreateAds;
-import ru.skypro.homework.dto.FullAds;
+import ru.skypro.homework.dto.adsDTO.AdsDTO;
+import ru.skypro.homework.dto.adsDTO.CreateAds;
+import ru.skypro.homework.dto.adsDTO.FullAds;
 import ru.skypro.homework.model.Ads;
 
 public class AdsMapper {
@@ -13,7 +13,7 @@ public class AdsMapper {
         adsDTO.setAuthor(ads.getAuthor().getId());
         adsDTO.setTitle(ads.getTitle());
         adsDTO.setPrice(ads.getPrice());
-        adsDTO.setImage(ads.getImage());
+        adsDTO.setImage("/ads/image/" + ads.getPk());
         return adsDTO;
     }
 
@@ -23,9 +23,9 @@ public class AdsMapper {
         fullAds.setTitle(ads.getTitle());
         fullAds.setDescription(ads.getDescription());
         fullAds.setPrice(ads.getPrice());
-        fullAds.setImage(ads.getImage());
-        fullAds.setEmail(ads.getEmail());
-        fullAds.setPhone(ads.getPhone());
+        fullAds.setImage("/ads/image/" + ads.getPk());
+        fullAds.setEmail(ads.getAuthor().getUsername());
+        fullAds.setPhone(ads.getAuthor().getPhone());
         return fullAds;
     }
 
@@ -35,9 +35,6 @@ public class AdsMapper {
         ads.setTitle(fullAds.getTitle());
         ads.setDescription(fullAds.getDescription());
         ads.setPrice(fullAds.getPrice());
-        ads.setImage(fullAds.getImage());
-        ads.setEmail(fullAds.getEmail());
-        ads.setPhone(fullAds.getPhone());
         return ads;
     }
 

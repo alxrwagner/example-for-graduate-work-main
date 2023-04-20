@@ -4,10 +4,9 @@
 create table comment
 (
     pk serial not null primary key,
-    author_image varchar(255),
-    created_at   integer,
+    created_at   timestamp,
     text         varchar(255),
-    ads_id       integer
+    ads_pk       integer
         references public.ads,
     author_id    integer
         references public.users

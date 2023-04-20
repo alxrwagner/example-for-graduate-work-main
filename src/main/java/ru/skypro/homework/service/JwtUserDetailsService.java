@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepos;
-import ru.skypro.homework.dto.JwtUser;
+import ru.skypro.homework.dto.userDTO.JwtUser;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 @Service

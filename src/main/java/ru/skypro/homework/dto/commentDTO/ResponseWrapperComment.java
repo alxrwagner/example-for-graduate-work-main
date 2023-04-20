@@ -1,6 +1,7 @@
-package ru.skypro.homework.dto;
+package ru.skypro.homework.dto.commentDTO;
 
 import lombok.Data;
+import ru.skypro.homework.dto.commentDTO.CommentDTO;
 
 import java.util.List;
 

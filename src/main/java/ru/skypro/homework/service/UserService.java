@@ -4,12 +4,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.NewPassword;
-import ru.skypro.homework.dto.UserDTO;
+import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.dto.userDTO.NewPassword;
+import ru.skypro.homework.dto.userDTO.UserDTO;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepos;
 import ru.skypro.homework.service.mapper.UserMapper;
+
+import java.io.IOException;
 
 @Service
 public class UserService {
@@ -22,12 +25,12 @@ public class UserService {
         this.encoder = encoder;
     }
 
-    public UserDTO findByUsername(String username) {
-        return UserMapper.mapToDTO(userRepos.findByUsername(username).orElseThrow(NotFoundException::new));
+    public UserDTO findByUsername(Authentication authentication) {
+        return UserMapper.mapToDTO(userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new));
     }
 
     public void changePassword(NewPassword newPassword, Authentication authentication){
-        User user = UserMapper.mapFromDTO(findByUsername(authentication.getName()));
+        User user = UserMapper.mapFromDTO(findByUsername(authentication));
         if(!encoder.matches(newPassword.getCurrentPassword(), user.getPassword())){
             throw new BadCredentialsException("Authentication exception");
         }
@@ -42,5 +45,16 @@ public class UserService {
         user.setPhone(userDTO.getPhone());
         userRepos.save(user);
         return userDTO;
+    }
+
+    public boolean updateAvatar(Authentication authentication, MultipartFile avatar) throws IOException {
+        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
+        user.setImage(avatar.getBytes());
+        userRepos.save(user);
+        return true;
+    }
+
+    public byte[] showAvatarOnId(Integer id) {
+        return userRepos.findById(id).orElseThrow(NotFoundException::new).getImage();
     }
 }

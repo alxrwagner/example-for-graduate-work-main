@@ -1,41 +1,46 @@
 package ru.skypro.homework.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-import ru.skypro.homework.dto.CommentDTO;
-import ru.skypro.homework.dto.ResponseWrapperComment;
+import ru.skypro.homework.dto.commentDTO.CommentDTO;
+import ru.skypro.homework.dto.commentDTO.ResponseWrapperComment;
 import ru.skypro.homework.service.CommentsService;
-import ru.skypro.homework.service.impl.CommentsServiceImpl;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
-@RequestMapping(value = "/ads/{id}/comments")
+@RequestMapping(value = "/ads")
 public class CommentsController {
 
-    private final CommentsServiceImpl commentsService;
+    private final CommentsService commentsService;
 
-    public CommentsController(CommentsServiceImpl commentsService) {
+    public CommentsController(CommentsService commentsService) {
         this.commentsService = commentsService;
     }
 
-    @GetMapping
-    public ResponseWrapperComment getComments(@PathVariable Long id){
+    @GetMapping("/{id}/comments")
+    public ResponseWrapperComment getComments(@PathVariable Integer id){
         return commentsService.getAll(id);
     }
 
-    @PostMapping
-    public CommentDTO addComment(@PathVariable Long id, @RequestBody CommentDTO commentDTO){
-        return commentsService.addComment(id, commentDTO);
+    @PostMapping("/{id}/comments")
+    public CommentDTO addComment(@PathVariable Integer id, @RequestBody CommentDTO commentDTO, Authentication authentication){
+        return commentsService.addComment(id, commentDTO, authentication);
     }
 
-    @DeleteMapping(value = "/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable Long id, @PathVariable Long commentId){
-        commentsService.deleteComment(id, commentId);
+    @PreAuthorize("commentsService.getById(#commentId).author.username" +
+            "== authentication.principal.username or hasRole('ROLE_ADMIN')")
+    @DeleteMapping(value = "/{adId}/comments/{commentId}")
+    public ResponseEntity<?> deleteComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId){
+        commentsService.deleteComment(commentId, adId);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping(value = "/{commentId}")
-    public CommentDTO updateComment(@PathVariable Long id, @PathVariable Long commentId, @RequestBody CommentDTO commentDTO){
-        return commentsService.update(id,commentId, commentDTO);
+    @PreAuthorize("commentsService.getById(#commentId).author.username" +
+            "== authentication.principal.username")
+    @PatchMapping(value = "/{adId}/comments/{commentId}")
+    public CommentDTO updateComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId, @RequestBody CommentDTO commentDTO){
+        return commentsService.update(commentId, adId, commentDTO);
     }
 }

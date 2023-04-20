@@ -5,10 +5,11 @@ import org.springframework.stereotype.Repository;
 import ru.skypro.homework.model.Comment;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface CommentRepos extends JpaRepository<Comment, Long> {
-    List<Comment> findAllByAdsPk(Long pk);
-
-    Comment findByAdsPkAndPk(Long pk, Long adsPk);
+public interface CommentRepos extends JpaRepository<Comment, Integer> {
+    List<Comment> findAllByAdsPk(Integer pk);
+    Optional<Comment> findByPkAndAdsPk(Integer pk, Integer adsPk);
+    void deleteByPkAndAdsPk(Integer pk, Integer adsPk);
 }

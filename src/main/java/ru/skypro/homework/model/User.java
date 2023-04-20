@@ -1,6 +1,7 @@
 package ru.skypro.homework.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
 import ru.skypro.homework.dto.Role;
 
 import javax.persistence.*;
@@ -17,14 +18,14 @@ public class User {
     private String firstName;
     private String lastName;
     private String phone;
-    private String image;
+    private byte[] image;
     private String password;
     private Boolean enabled;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "author", cascade = {CascadeType.REMOVE})
     private List<Ads> ads;
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.REMOVE})
     private List<Comment> comments;
 
 }
