@@ -1,6 +1,7 @@
 package ru.skypro.homework.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,8 @@ public class Ads {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pk;
     private String description;
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     private byte[] image;
     private Integer price;
     private String title;
