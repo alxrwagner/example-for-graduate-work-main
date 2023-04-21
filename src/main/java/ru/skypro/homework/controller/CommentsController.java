@@ -20,19 +20,19 @@ public class CommentsController {
     }
 
     @GetMapping("/{id}/comments")
-    public ResponseWrapperComment getComments(@PathVariable Integer id){
+    public ResponseWrapperComment getComments(@PathVariable Integer id) {
         return commentsService.getAll(id);
     }
 
     @PostMapping("/{id}/comments")
-    public CommentDTO addComment(@PathVariable Integer id, @RequestBody CommentDTO commentDTO, Authentication authentication){
+    public CommentDTO addComment(@PathVariable Integer id, @RequestBody CommentDTO commentDTO, Authentication authentication) {
         return commentsService.addComment(id, commentDTO, authentication);
     }
 
     @PreAuthorize("@commentsService.getById(#commentId).author.username" +
             "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{adId}/comments/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId){
+    public ResponseEntity<?> deleteComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId) {
         commentsService.deleteComment(commentId, adId);
         return ResponseEntity.ok().build();
     }
@@ -40,7 +40,7 @@ public class CommentsController {
     @PreAuthorize("@commentsService.getById(#commentId).author.username" +
             "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{adId}/comments/{commentId}")
-    public CommentDTO updateComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId, @RequestBody CommentDTO commentDTO){
+    public CommentDTO updateComment(@PathVariable("commentId") Integer commentId, @PathVariable("adId") Integer adId, @RequestBody CommentDTO commentDTO) {
         return commentsService.update(commentId, adId, commentDTO);
     }
 }

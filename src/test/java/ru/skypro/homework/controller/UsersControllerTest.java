@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockPart;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
@@ -20,7 +19,6 @@ import ru.skypro.homework.dto.userDTO.UserDTO;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepos;
-import ru.skypro.homework.service.CustomUserDetailsService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

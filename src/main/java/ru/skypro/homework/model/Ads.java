@@ -14,7 +14,7 @@ public class Ads {
     private Integer pk;
     private String description;
     @Lob
-    @Type(type="org.hibernate.type.BinaryType")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;
     private Integer price;
     private String title;
