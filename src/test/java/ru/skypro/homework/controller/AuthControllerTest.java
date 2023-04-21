@@ -1,7 +1,6 @@
 package ru.skypro.homework.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Testcontainers
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class AuthControllerTest {
 
     @Autowired
@@ -43,18 +43,16 @@ class AuthControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
     @Autowired
     private UserRepos userRepos;
-    private final RegisterReq registerReq = new RegisterReq();
+    private RegisterReq registerReq = new RegisterReq();
     private LoginReq loginReq;
-    private User user;
-    private UserDetails userDetails;
 
     @BeforeEach
     void setUp() {
-        user = new User();
-        user.setUsername(RandomStringUtils.randomAlphanumeric(8) + "@mail.ru");
+        User user = new User();
+        user.setUsername("1@mail.ru");
         user.setFirstName("firstTest");
         user.setLastName("lastTest");
         user.setPhone("+79990002233");
@@ -63,7 +61,8 @@ class AuthControllerTest {
         user.setRole(Role.USER);
         userRepos.save(user);
 
-        registerReq.setUsername(RandomStringUtils.randomAlphanumeric(8) + "@mail.ru");
+
+        registerReq.setUsername("2@mail.ru");
         registerReq.setPassword("1234qwer");
         registerReq.setFirstName("testFirst");
         registerReq.setLastName("testLast");
@@ -81,6 +80,7 @@ class AuthControllerTest {
     }
 
     @Test
+    @WithAnonymousUser
     void login() throws Exception {
         mockMvcAuth.perform(post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,6 +89,7 @@ class AuthControllerTest {
     }
 
     @Test
+    @WithAnonymousUser
     void register() throws Exception {
         mockMvcAuth.perform(post("/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -96,7 +97,7 @@ class AuthControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        userDetails = userDetailsService.loadUserByUsername(registerReq.getUsername());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(registerReq.getUsername());
 
         Authentication auth = new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
                 userDetails.getPassword(),

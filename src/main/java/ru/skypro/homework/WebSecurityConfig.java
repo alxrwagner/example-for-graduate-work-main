@@ -23,7 +23,8 @@ public class WebSecurityConfig extends GlobalMethodSecurityConfiguration {
             "/login",
             "/register",
             "/ads",
-            "/ads/image/**"
+            "/ads/image/**",
+            "/ads/search"
     };
 
     @Bean

@@ -45,7 +45,7 @@ public class AdsService {
         }
         User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
         ads.setAuthor(user);
-        return AdsMapper.mapToDTO(adsRepos.save(ads));
+        return AdsMapper.mapToDTO(adsRepos.saveAndFlush(ads));
     }
 
 
@@ -84,7 +84,7 @@ public class AdsService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return adsRepos.save(ads).getImage();
+        return adsRepos.saveAndFlush(ads).getImage();
     }
 
     public byte[] showImage(Integer id) {

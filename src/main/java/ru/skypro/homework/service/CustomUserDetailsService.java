@@ -1,6 +1,5 @@
 package ru.skypro.homework.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +12,6 @@ import ru.skypro.homework.repository.UserRepos;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 @Service
-@Slf4j
 public class CustomUserDetailsService implements UserDetailsManager {
 
     private final PasswordEncoder encoder;
