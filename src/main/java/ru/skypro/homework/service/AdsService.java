@@ -76,7 +76,7 @@ public class AdsService {
     }
 
     @Transactional
-    public void updateImage(Integer id, MultipartFile avatar) {
+    public byte[] updateImage(Integer id, MultipartFile avatar) {
         Ads ads = adsRepos.findById(id).orElseThrow(NotFoundException::new);
         try {
             byte[] bytes = avatar.getBytes();
@@ -84,7 +84,7 @@ public class AdsService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        adsRepos.save(ads);
+        return adsRepos.save(ads).getImage();
     }
 
     public byte[] showImage(Integer id) {

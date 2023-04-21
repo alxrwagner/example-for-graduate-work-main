@@ -8,18 +8,18 @@ import ru.skypro.homework.dto.userDTO.RegisterReq;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.service.AuthService;
-import ru.skypro.homework.service.JwtUserDetailsService;
+import ru.skypro.homework.service.CustomUserDetailsService;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final JwtUserDetailsService manager;
+    private final CustomUserDetailsService manager;
 
     private final PasswordEncoder encoder;
 
-    public AuthServiceImpl(JwtUserDetailsService manager, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(CustomUserDetailsService manager, PasswordEncoder passwordEncoder) {
         this.manager = manager;
         this.encoder = passwordEncoder;
     }

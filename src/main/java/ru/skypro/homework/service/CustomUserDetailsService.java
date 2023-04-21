@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.userDTO.JwtUser;
+import ru.skypro.homework.dto.userDTO.CustomUserDetails;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepos;
@@ -14,19 +14,19 @@ import ru.skypro.homework.service.mapper.UserMapper;
 
 @Service
 @Slf4j
-public class JwtUserDetailsService implements UserDetailsManager {
+public class CustomUserDetailsService implements UserDetailsManager {
 
     private final PasswordEncoder encoder;
     private final UserRepos userRepos;
 
-    public JwtUserDetailsService(PasswordEncoder encoder, UserRepos userRepos) {
+    public CustomUserDetailsService(PasswordEncoder encoder, UserRepos userRepos) {
         this.encoder = encoder;
         this.userRepos = userRepos;
     }
 
     @Override
     public void createUser(UserDetails user) {
-        User saveUser = UserMapper.jwtUserToUser((JwtUser) user);
+        User saveUser = UserMapper.jwtUserToUser((CustomUserDetails) user);
         saveUser.setPassword(encoder.encode(user.getPassword()));
         userRepos.save(saveUser);
     }

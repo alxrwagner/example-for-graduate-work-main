@@ -10,7 +10,7 @@ import ru.skypro.homework.dto.Role;
 import java.util.Collection;
 import java.util.List;
 @Data
-public class JwtUser implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
     private String username;
     private String firstName;

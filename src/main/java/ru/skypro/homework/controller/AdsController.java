@@ -44,7 +44,7 @@ public class AdsController {
         return ResponseEntity.ok(adsService.getById(id));
     }
 
-    @PreAuthorize("adsService.getById(#id).getEmail()" +
+    @PreAuthorize("@adsService.getById(#id).getEmail()" +
             "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> removeAd(@PathVariable Integer id) {
@@ -57,7 +57,7 @@ public class AdsController {
         return ResponseEntity.ok(adsService.search(title));
     }
 
-    @PreAuthorize("adsService.getById(#id).getEmail()" +
+    @PreAuthorize("@adsService.getById(#id).getEmail()" +
             "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{id}")
     public ResponseEntity<?> updateAds(@PathVariable Integer id, @RequestBody CreateAds createAds) {
@@ -69,12 +69,11 @@ public class AdsController {
         return ResponseEntity.ok(adsService.getMeAll(authentication));
     }
 
-    @PreAuthorize("adsService.getById(#id).getEmail()" +
+    @PreAuthorize("@adsService.getById(#id).getEmail()" +
             "== authentication.principal.username or hasRole('ROLE_ADMIN')")
     @PatchMapping(value = "/{id}/image")
     public ResponseEntity<?> updateImage(@PathVariable Integer id, @RequestParam("image") MultipartFile avatar) {
-        adsService.updateImage(id, avatar);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(adsService.updateImage(id, avatar));
     }
 
     @GetMapping(value = "/image/{id}", produces = MediaType.IMAGE_JPEG_VALUE)
