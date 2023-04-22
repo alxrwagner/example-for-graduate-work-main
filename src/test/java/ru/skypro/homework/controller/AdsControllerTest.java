@@ -205,6 +205,32 @@ class AdsControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "2@mail.ru", password = "1234qwer")
+    void updateImage_withOtherUser() throws Exception {
+        mockMvcAds.perform(patch("/ads/" + ads.getPk() + "/image")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .with(request -> {
+                            request.addPart(image);
+                            return request;
+                        }))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    @WithMockUser(username = "2@mail.ru", password = "1234qwer", roles = "ADMIN")
+    void updateImage_withRoleAdmin() throws Exception {
+        mockMvcAds.perform(patch("/ads/" + ads.getPk() + "/image")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .with(request -> {
+                            request.addPart(image);
+                            return request;
+                        }))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
     void showImage() throws Exception {
         mockMvcAds.perform(get("/ads/image/" + ads.getPk()))
                 .andExpect(status().isOk())

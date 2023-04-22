@@ -128,9 +128,32 @@ class CommentControllerTest {
     @WithMockUser(username = "1@mail.ru", password = "1234qwer")
     void updateComment() throws Exception {
         mockMvcComment.perform(patch("/ads/" + ads.getPk() + "/comments/" + comment.getPk())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"text\": \"newText\"\n" +
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"text\": \"newText\"\n" +
+                                "}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.text").value("newText"));
+    }
+
+    @Test
+    @WithMockUser(username = "2@mail.ru", password = "1234qwer")
+    void updateComment_withOtherUser() throws Exception {
+        mockMvcComment.perform(patch("/ads/" + ads.getPk() + "/comments/" + comment.getPk())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"text\": \"newText\"\n" +
+                                "}"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "2@mail.ru", password = "1234qwer", roles = "ADMIN")
+    void updateComment_withRoleAdmin() throws Exception {
+        mockMvcComment.perform(patch("/ads/" + ads.getPk() + "/comments/" + comment.getPk())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"text\": \"newText\"\n" +
                                 "}"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.text").value("newText"));
