@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Testcontainers
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-class CommentsControllerTest {
+class CommentControllerTest {
     @Autowired
     private MockMvc mockMvcComment;
     @Autowired
