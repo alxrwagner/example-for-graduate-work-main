@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails user) {
-        User saveUser = UserMapper.customUserDetailsToUser((CustomUserDetails) Validator.checkValidateObj(user));
+        User saveUser = UserMapper.customUserDetailsToUser((CustomUserDetails) user);
         saveUser.setPassword(encoder.encode(user.getPassword()));
         userRepos.save(saveUser);
     }
