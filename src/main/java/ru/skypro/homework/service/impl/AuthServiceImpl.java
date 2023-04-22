@@ -40,9 +40,9 @@ public class AuthServiceImpl implements AuthService {
         if (manager.userExists(Validator.checkValidateObj(registerReq).getUsername())) {
             return false;
         }
-        Validator.checkValidateEmail(registerReq.getUsername());
-        Validator.checkValidatePassword(registerReq.getPassword());
-        Validator.checkValidatePhone(registerReq.getPhone(), 7);
+        registerReq.setUsername(Validator.checkValidateEmail(registerReq.getUsername()));
+        registerReq.setPassword(Validator.checkValidatePassword(registerReq.getPassword()));
+        registerReq.setPhone(Validator.checkValidatePhone(registerReq.getPhone(), 7));
         User user = UserMapper.mapFromRegister(registerReq);
         user.setRole(Role.USER);
         manager.createUser(UserMapper.mapToCustomUserDetails(user));
