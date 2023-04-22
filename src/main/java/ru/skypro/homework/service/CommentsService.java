@@ -34,7 +34,7 @@ public class CommentsService {
     }
 
     public CommentDTO addComment(Integer id, CommentDTO commentDTO, Authentication authentication) {
-        Comment comment = CommentMapper.mapFromDto(commentDTO);
+        Comment comment = CommentMapper.mapFromDto(Validator.checkValidateObj(commentDTO));
         User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
         comment.setAuthor(user);
         comment.setAds(adsRepos.findById(id).orElseThrow(NotFoundException::new));
@@ -44,7 +44,7 @@ public class CommentsService {
 
     @Transactional
     public void deleteComment(Integer commentId, Integer adId) {
-        commentRepos.deleteByPkAndAdsPk(commentId, adId);
+        commentRepos.deleteByPkAndAdsPk(Validator.checkValidateObj(commentId), adId);
     }
 
     @Transactional

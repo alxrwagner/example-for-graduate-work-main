@@ -36,7 +36,8 @@ public class AdsService {
     }
 
     public AdsDTO create(MultipartFile imageFile, CreateAds createAds, Authentication authentication) {
-        Ads ads = AdsMapper.mapFromCreateAds(createAds);
+        Validator.checkValidateObj(imageFile);
+        Ads ads = AdsMapper.mapFromCreateAds(Validator.checkValidateObj(createAds));
         try {
             byte[] bytes = imageFile.getBytes();
             ads.setImage(bytes);
@@ -60,6 +61,7 @@ public class AdsService {
 
     @Transactional
     public AdsDTO update(Integer id, CreateAds createAds) {
+        Validator.checkValidateObj(createAds);
         Ads ads = adsRepos.findById(id).orElseThrow(NotFoundException::new);
         ads.setTitle(createAds.getTitle());
         ads.setDescription(createAds.getDescription());
@@ -77,6 +79,7 @@ public class AdsService {
 
     @Transactional
     public byte[] updateImage(Integer id, MultipartFile avatar) {
+        Validator.checkValidateObj(avatar);
         Ads ads = adsRepos.findById(id).orElseThrow(NotFoundException::new);
         try {
             byte[] bytes = avatar.getBytes();

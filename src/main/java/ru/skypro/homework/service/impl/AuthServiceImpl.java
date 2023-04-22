@@ -9,6 +9,7 @@ import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.CustomUserDetailsService;
+import ru.skypro.homework.service.Validator;
 import ru.skypro.homework.service.mapper.UserMapper;
 
 
@@ -26,7 +27,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean login(String userName, String password) {
-        if (!manager.userExists(userName)) {
+        Validator.checkValidateString(password);
+        if (!manager.userExists(Validator.checkValidateString(userName))) {
             throw new NotFoundException();
         }
         UserDetails userDetails = manager.loadUserByUsername(userName);
@@ -35,12 +37,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public boolean register(RegisterReq registerReq) {
-        if (manager.userExists(registerReq.getUsername())) {
+        if (manager.userExists(Validator.checkValidateObj(registerReq).getUsername())) {
             return false;
         }
         User user = UserMapper.mapFromRegister(registerReq);
         user.setRole(Role.USER);
-        manager.createUser(UserMapper.mapToJwtUser(user));
+        manager.createUser(UserMapper.mapToCustomUserDetails(user));
         return true;
     }
 }

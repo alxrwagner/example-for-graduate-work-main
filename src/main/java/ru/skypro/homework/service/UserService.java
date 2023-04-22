@@ -29,6 +29,7 @@ public class UserService {
     }
 
     public void changePassword(NewPassword newPassword, Authentication authentication) {
+        Validator.checkValidateObj(newPassword);
         User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
         if (!encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
             throw new BadCredentialsException("Authentication exception");
@@ -48,7 +49,7 @@ public class UserService {
 
     public boolean updateAvatar(Authentication authentication, MultipartFile avatar) throws IOException {
         User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
-        user.setImage(avatar.getBytes());
+        user.setImage(Validator.checkValidateObj(avatar).getBytes());
         userRepos.save(user);
         return true;
     }

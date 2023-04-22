@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails user) {
-        User saveUser = UserMapper.jwtUserToUser((CustomUserDetails) user);
+        User saveUser = UserMapper.customUserDetailsToUser((CustomUserDetails) Validator.checkValidateObj(user));
         saveUser.setPassword(encoder.encode(user.getPassword()));
         userRepos.save(saveUser);
     }
@@ -51,6 +51,7 @@ public class CustomUserDetailsService implements UserDetailsManager {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return UserMapper.mapToJwtUser(userRepos.findByUsername(username).orElseThrow(NotFoundException::new));
+        Validator.checkValidateString(username);
+        return UserMapper.mapToCustomUserDetails(userRepos.findByUsername(username).orElseThrow(NotFoundException::new));
     }
 }

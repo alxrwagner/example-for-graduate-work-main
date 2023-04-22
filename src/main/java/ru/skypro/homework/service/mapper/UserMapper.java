@@ -28,7 +28,7 @@ public class UserMapper {
         return user;
     }
 
-    public static CustomUserDetails mapToJwtUser(User user) {
+    public static CustomUserDetails mapToCustomUserDetails(User user) {
         CustomUserDetails customUserDetails = new CustomUserDetails();
         customUserDetails.setRole(user.getRole());
         customUserDetails.setUsername(user.getUsername());
@@ -41,7 +41,7 @@ public class UserMapper {
         return customUserDetails;
     }
 
-    public static User jwtUserToUser(CustomUserDetails customUserDetails) {
+    public static User customUserDetailsToUser(CustomUserDetails customUserDetails) {
         User user = new User();
         user.setUsername(customUserDetails.getUsername());
         user.setFirstName(customUserDetails.getFirstName());
