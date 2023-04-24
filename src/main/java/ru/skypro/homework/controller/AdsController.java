@@ -43,7 +43,7 @@ public class AdsController {
                             responseCode = "201", description = "Created",
                             content = {@Content(mediaType = "application/json",
                                     schema = @Schema(implementation = AdsDTO.class))}),
-                    @ApiResponse(responseCode = "401", description = "Unauthorised", content = @Content), //где получить?
+                    @ApiResponse(responseCode = "401", description = "Unauthorised", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content)
             }

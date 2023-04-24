@@ -30,6 +30,7 @@ public class CommentsService {
     public ResponseWrapperComment getAll(Integer adsId) {
         ResponseWrapperComment wrapper = new ResponseWrapperComment();
         wrapper.setResults(commentRepos.findAllByAdsPk(adsId).stream().map(CommentMapper::mapToDTO).collect(Collectors.toList()));
+        wrapper.setCount(wrapper.getResults().size());
         return wrapper;
     }
 
