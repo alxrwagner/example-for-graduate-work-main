@@ -24,7 +24,8 @@ public class WebSecurityConfig extends GlobalMethodSecurityConfiguration {
             "/register",
             "/ads",
             "/ads/image/**",
-            "/ads/search"
+            "/ads/search",
+            "/users/me/image"
     };
 
     @Bean

@@ -16,7 +16,7 @@ import ru.skypro.homework.service.UserService;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin(value = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping(value = "/users")
 public class UsersController {
 
@@ -33,7 +33,7 @@ public class UsersController {
                             responseCode = "200", description = "OK",
                             content = {@Content(mediaType = "application/json",
                                     schema = @Schema(implementation = NewPassword.class))}),
-                    @ApiResponse(responseCode = "401", description = "Unauthorised", content = @Content), //где получить?
+                    @ApiResponse(responseCode = "401", description = "Unauthorised", content = @Content),
                     @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content),
                     @ApiResponse(responseCode = "404", description = "Not found", content = @Content)
             }

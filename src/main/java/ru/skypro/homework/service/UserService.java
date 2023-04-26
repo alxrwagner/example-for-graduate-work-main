@@ -5,12 +5,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.skypro.homework.dto.userDTO.CustomUserDetails;
 import ru.skypro.homework.dto.userDTO.NewPassword;
 import ru.skypro.homework.dto.userDTO.UserDTO;
 import ru.skypro.homework.exception.NotFoundException;
+import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepos;
-import ru.skypro.homework.service.mapper.UserMapper;
+import ru.skypro.homework.validator.Validator;
 
 import java.io.IOException;
 
@@ -30,12 +32,12 @@ public class UserService {
 
     public void changePassword(NewPassword newPassword, Authentication authentication) {
         Validator.checkValidateObj(newPassword);
-        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
         if (!encoder.matches(newPassword.getCurrentPassword(), user.getPassword())) {
             throw new BadCredentialsException("Authentication exception");
         }
         user.setPassword(encoder.encode(newPassword.getNewPassword()));
-        userRepos.save(user);
+        userRepos.save(UserMapper.customUserDetailsToUser(user));
     }
 
     public UserDTO update(UserDTO userDTO) {
@@ -48,7 +50,7 @@ public class UserService {
     }
 
     public boolean updateAvatar(Authentication authentication, MultipartFile avatar) throws IOException {
-        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
+        User user = UserMapper.customUserDetailsToUser((CustomUserDetails) authentication.getPrincipal());
         user.setImage(Validator.checkValidateObj(avatar).getBytes());
         userRepos.save(user);
         return true;

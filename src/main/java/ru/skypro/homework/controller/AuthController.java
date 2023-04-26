@@ -15,8 +15,8 @@ import ru.skypro.homework.dto.userDTO.LoginReq;
 import ru.skypro.homework.dto.userDTO.RegisterReq;
 import ru.skypro.homework.service.AuthService;
 
-@CrossOrigin(value = "http://localhost:3000")
 @RestController
+@CrossOrigin
 @RequiredArgsConstructor
 public class AuthController {
 

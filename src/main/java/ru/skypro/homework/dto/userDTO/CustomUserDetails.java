@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 public class CustomUserDetails implements UserDetails {
 
+    private Integer id;
     private String username;
     private String firstName;
     private String lastName;

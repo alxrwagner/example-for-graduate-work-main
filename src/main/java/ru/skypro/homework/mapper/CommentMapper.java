@@ -1,4 +1,4 @@
-package ru.skypro.homework.service.mapper;
+package ru.skypro.homework.mapper;
 
 import ru.skypro.homework.dto.commentDTO.CommentDTO;
 import ru.skypro.homework.model.Comment;

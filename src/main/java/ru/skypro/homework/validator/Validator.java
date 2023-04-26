@@ -1,4 +1,4 @@
-package ru.skypro.homework.service;
+package ru.skypro.homework.validator;
 
 
 import ru.skypro.homework.exception.InvalidEmailException;

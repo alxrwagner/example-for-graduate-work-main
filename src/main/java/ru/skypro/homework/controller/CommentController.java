@@ -13,7 +13,7 @@ import ru.skypro.homework.dto.commentDTO.ResponseWrapperComment;
 import ru.skypro.homework.service.CommentsService;
 
 @RestController
-@CrossOrigin(value = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping(value = "/ads")
 public class CommentController {
 

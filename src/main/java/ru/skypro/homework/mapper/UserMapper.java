@@ -1,4 +1,4 @@
-package ru.skypro.homework.service.mapper;
+package ru.skypro.homework.mapper;
 
 import ru.skypro.homework.dto.userDTO.CustomUserDetails;
 import ru.skypro.homework.dto.userDTO.RegisterReq;
@@ -30,6 +30,7 @@ public class UserMapper {
 
     public static CustomUserDetails mapToCustomUserDetails(User user) {
         CustomUserDetails customUserDetails = new CustomUserDetails();
+        customUserDetails.setId(user.getId());
         customUserDetails.setRole(user.getRole());
         customUserDetails.setUsername(user.getUsername());
         customUserDetails.setPassword(user.getPassword());
@@ -43,6 +44,7 @@ public class UserMapper {
 
     public static User customUserDetailsToUser(CustomUserDetails customUserDetails) {
         User user = new User();
+        user.setId(customUserDetails.getId());
         user.setUsername(customUserDetails.getUsername());
         user.setFirstName(customUserDetails.getFirstName());
         user.setLastName(customUserDetails.getLastName());

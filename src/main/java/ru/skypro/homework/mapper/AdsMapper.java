@@ -1,4 +1,4 @@
-package ru.skypro.homework.service.mapper;
+package ru.skypro.homework.mapper;
 
 import ru.skypro.homework.dto.adsDTO.AdsDTO;
 import ru.skypro.homework.dto.adsDTO.CreateAds;

@@ -9,11 +9,12 @@ import ru.skypro.homework.dto.adsDTO.CreateAds;
 import ru.skypro.homework.dto.adsDTO.FullAds;
 import ru.skypro.homework.dto.adsDTO.ResponseWrapperAds;
 import ru.skypro.homework.exception.NotFoundException;
+import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.model.Ads;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepos;
 import ru.skypro.homework.repository.UserRepos;
-import ru.skypro.homework.service.mapper.AdsMapper;
+import ru.skypro.homework.validator.Validator;
 
 import java.io.IOException;
 import java.util.stream.Collectors;

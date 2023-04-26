@@ -19,7 +19,7 @@ import ru.skypro.homework.dto.userDTO.UserDTO;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.UserRepos;
-import ru.skypro.homework.service.mapper.UserMapper;
+import ru.skypro.homework.mapper.UserMapper;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

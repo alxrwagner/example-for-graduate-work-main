@@ -6,12 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.commentDTO.CommentDTO;
 import ru.skypro.homework.dto.commentDTO.ResponseWrapperComment;
 import ru.skypro.homework.exception.NotFoundException;
+import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepos;
 import ru.skypro.homework.repository.CommentRepos;
 import ru.skypro.homework.repository.UserRepos;
-import ru.skypro.homework.service.mapper.CommentMapper;
+import ru.skypro.homework.validator.Validator;
 
 import java.util.stream.Collectors;
 
