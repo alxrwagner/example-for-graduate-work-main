@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public UserDTO findByUsername(Authentication authentication) {
-        return UserMapper.mapToDTO(userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new));
+        return UserMapper.mapToDTO(UserMapper.customUserDetailsToUser((CustomUserDetails) authentication.getPrincipal()));
     }
 
     public void changePassword(NewPassword newPassword, Authentication authentication) {

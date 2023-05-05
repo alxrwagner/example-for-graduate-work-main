@@ -8,12 +8,13 @@ import ru.skypro.homework.dto.adsDTO.AdsDTO;
 import ru.skypro.homework.dto.adsDTO.CreateAds;
 import ru.skypro.homework.dto.adsDTO.FullAds;
 import ru.skypro.homework.dto.adsDTO.ResponseWrapperAds;
+import ru.skypro.homework.dto.userDTO.CustomUserDetails;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
+import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Ads;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepos;
-import ru.skypro.homework.repository.UserRepos;
 import ru.skypro.homework.validator.Validator;
 
 import java.io.IOException;
@@ -22,11 +23,9 @@ import java.util.stream.Collectors;
 @Service
 public class AdsService {
     private final AdsRepos adsRepos;
-    private final UserRepos userRepos;
 
-    public AdsService(AdsRepos adsRepos, UserRepos userRepos) {
+    public AdsService(AdsRepos adsRepos) {
         this.adsRepos = adsRepos;
-        this.userRepos = userRepos;
     }
 
     public ResponseWrapperAds getAll() {
@@ -45,7 +44,7 @@ public class AdsService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
+        User user = UserMapper.customUserDetailsToUser((CustomUserDetails) authentication.getPrincipal());
         ads.setAuthor(user);
         return AdsMapper.mapToDTO(adsRepos.saveAndFlush(ads));
     }
@@ -72,7 +71,7 @@ public class AdsService {
 
     public ResponseWrapperAds getMeAll(Authentication authentication) {
         ResponseWrapperAds wrap = new ResponseWrapperAds();
-        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
+        User user = UserMapper.customUserDetailsToUser((CustomUserDetails) authentication.getPrincipal());
         wrap.setResults(adsRepos.findAllByAuthorId(user.getId()).stream().map(AdsMapper::mapToDTO).collect(Collectors.toList()));
         wrap.setCount(wrap.getResults().size());
         return wrap;

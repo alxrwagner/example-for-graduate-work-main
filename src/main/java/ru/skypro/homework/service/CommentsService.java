@@ -5,13 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.skypro.homework.dto.commentDTO.CommentDTO;
 import ru.skypro.homework.dto.commentDTO.ResponseWrapperComment;
+import ru.skypro.homework.dto.userDTO.CustomUserDetails;
 import ru.skypro.homework.exception.NotFoundException;
 import ru.skypro.homework.mapper.CommentMapper;
+import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.model.Comment;
 import ru.skypro.homework.model.User;
 import ru.skypro.homework.repository.AdsRepos;
 import ru.skypro.homework.repository.CommentRepos;
-import ru.skypro.homework.repository.UserRepos;
 import ru.skypro.homework.validator.Validator;
 
 import java.util.stream.Collectors;
@@ -19,12 +20,10 @@ import java.util.stream.Collectors;
 @Service
 public class CommentsService {
     private final CommentRepos commentRepos;
-    private final UserRepos userRepos;
     private final AdsRepos adsRepos;
 
-    public CommentsService(CommentRepos commentRepos, UserRepos userRepos, AdsRepos adsRepos) {
+    public CommentsService(CommentRepos commentRepos, AdsRepos adsRepos) {
         this.commentRepos = commentRepos;
-        this.userRepos = userRepos;
         this.adsRepos = adsRepos;
     }
 
@@ -37,7 +36,7 @@ public class CommentsService {
 
     public CommentDTO addComment(Integer id, CommentDTO commentDTO, Authentication authentication) {
         Comment comment = CommentMapper.mapFromDto(Validator.checkValidateObj(commentDTO));
-        User user = userRepos.findByUsername(authentication.getName()).orElseThrow(NotFoundException::new);
+        User user = UserMapper.customUserDetailsToUser((CustomUserDetails) authentication.getPrincipal());
         comment.setAuthor(user);
         comment.setAds(adsRepos.findById(id).orElseThrow(NotFoundException::new));
         commentRepos.save(comment);
